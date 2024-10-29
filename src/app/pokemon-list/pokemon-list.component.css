@@ -1,0 +1,24 @@
+ul {
+  list-style-type: none;
+  padding-inline-start: 0;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+img {
+  max-width: 10rem;
+  margin: auto;
+}
+
+section {
+  max-width: 1024px;
+  margin: auto;
+  padding: 1rem;
+}
+
+mat-spinner {
+  margin: auto;
+  margin-top: 2rem;
+}

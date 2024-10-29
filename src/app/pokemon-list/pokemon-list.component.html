@@ -1,0 +1,42 @@
+<section>
+  <h1>Pokemon List</h1>
+
+  <mat-form-field>
+    <mat-label>Number of pokemons</mat-label>
+    <select matNativeControl required [(ngModel)]="pageSize">
+      @for (pageRange of pageRanges; track pageRange) {
+      <option [value]="pageRange">{{ pageRange }}</option>
+      }
+    </select>
+  </mat-form-field>
+
+  @if (loading()) {
+  <mat-spinner diameter="60" />
+  } @else {
+  <ul>
+    @for (pokemon of pokemons(); track pokemon.id) {
+    <li>
+      <mat-card class="example-card" appearance="outlined">
+        <mat-card-header>
+          <mat-card-title>{{ pokemon.name }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [src]="pokemon.image" [alt]="pokemon.name" />
+        <mat-card-content>
+          <p>
+            @for (type of pokemon.apiTypes; track type.name) {
+            <img
+              mat-card-image
+              [src]="type.image"
+              [alt]="type.name"
+              width="40"
+              height="40"
+            />
+            }
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </li>
+    }
+  </ul>
+  }
+</section>
