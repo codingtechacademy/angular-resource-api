@@ -1,11 +1,12 @@
-import { Component, resource, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Pokemon } from '../models/pokemon';
+import { PokemonService } from '../services/pokemon.service';
 
 const PAGE_SIZE = 10;
 
@@ -29,12 +30,11 @@ export class PokemonListComponent {
     .fill(1)
     .map((_, i) => (i + 1) * PAGE_SIZE);
 
-  pokemonResource = resource({
+  pokemonService = inject(PokemonService);
+
+  pokemonResource = rxResource({
     request: this.pageSize,
-    loader: ({ request: pageSize }) => {
-      return fetch(
-        `https://pokebuildapi.fr/api/v1/pokemon/limit/${pageSize}`
-      ).then((res) => res.json() as Promise<Pokemon[]>);
-    },
+    loader: ({ request: pageSize }) =>
+      this.pokemonService.getPokemons(pageSize),
   });
 }
